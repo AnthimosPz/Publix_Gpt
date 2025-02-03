@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Το Site Μου</title>
+  <title>Δεδομένα Σεισμών</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,20 +27,75 @@
       font-size: 0.9em;
       color: #666;
     }
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Καλώς ήρθατε στο Site Μου</h1>
+    <h1>Γραφική Παράσταση Σεισμών</h1>
   </header>
-  
+
   <main>
-    <p>Αυτό είναι ένα απλό HTML site που μπορείς να τροποποιείς με βάση τις ανάγκες σου.</p>
-    <p>Όταν θέλεις να κάνεις αλλαγές, απλά μου στέλνεις το κλειδί εξουσιοδότησης μαζί με το αίτημά σου.</p>
+    <p>Παρακάτω εμφανίζεται ένα γράφημα που παρουσιάζει δεδομένα σεισμών σε κλίμακα Ρίχτερ.</p>
+    <canvas id="earthquakeChart"></canvas>
   </main>
-  
+
   <footer>
-    <p>&copy; 2025 Το Site Μου</p>
+    <p>&copy; 2025 Δημιουργήθηκε από AnthimosPz</p>
   </footer>
+
+  <script>
+    // Δεδομένα σεισμών
+    const labels = [
+      "03/02 12:36", "03/02 12:31", "03/02 12:27", "03/02 12:17", "03/02 12:10",
+      "03/02 11:50", "03/02 11:44", "03/02 11:39", "03/02 11:28", "03/02 11:21"
+    ];
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: "Μέγεθος Σεισμού (Ρίχτερ)",
+        data: [3.9, 3.9, 3.7, 5.0, 4.2, 4.5, 3.7, 3.1, 2.0, 4.5],
+        borderColor: "#007acc",
+        backgroundColor: "rgba(0, 122, 204, 0.2)",
+        borderWidth: 2,
+        pointRadius: 5
+      }]
+    };
+
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Χρονική Στιγμή'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Μέγεθος (Ρίχτερ)'
+            },
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    const ctx = document.getElementById('earthquakeChart').getContext('2d');
+    new Chart(ctx, config);
+  </script>
 </body>
 </html>
